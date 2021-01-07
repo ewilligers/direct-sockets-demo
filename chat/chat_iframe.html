@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="data:,">
+  <style>
+    #scroller {
+        overflow: auto;
+    }
+
+    #history {
+      overflow-wrap: break-word;
+      height: 600px;
+    }
+
+    #msg, #send {
+      visibility: hidden;
+    }
+
+    button {
+      margin: 20px;
+    }
+  </style>
+  <script>
+    'use strict';
+
+    const remoteAddress = '127.0.0.1';
+    const remotePort = 4004;
+
+    const encoder = new TextEncoder();
+    let socket = null;
+    let writer = null;
+
+    const numbers = ['Alfa', 'Bravo', 'Charlie', 'Delta', 'Echo'];
+
+    window.onload = () => {
+      const connect = document.getElementById('connect');
+      const scroller = document.getElementById('scroller');
+      const history = document.getElementById('history');
+      const keypad = document.getElementById('keypad');
+      const msg = document.getElementById('msg');
+      const send = document.getElementById('send');
+
+      function appendMessage(line) {
+        console.log(line);
+        let div = document.createElement('div');
+        div.textContent = line;
+        history.appendChild(div);
+        scroller.offsetTop;
+        scroller.scrollTop = scroller.scrollHeight;
+      }
+
+      connect.onclick = async () => {
+        connect.parentElement.removeChild(connect);
+        socket = await navigator.openTCPSocket({remoteAddress: remoteAddress,
+                                                remotePort: remotePort});
+        writer = socket.writable.getWriter();
+
+        async function transmit(text) {
+          try {
+            await writer.ready;
+          } catch (e) {
+            console.log(e);
+            return;
+          }
+          try {
+            appendMessage('<self> ' + text);
+            await writer.write(encoder.encode(text + '\r\n'));
+          } catch (e) {
+            console.log(e);
+          }
+        }
+
+        msg.style.visibility = 'visible';
+        send.style.visibility = 'visible';
+
+        send.onclick = () => { 
+          let text = msg.value;
+          msg.value = '';
+          transmit(text);
+        };
+
+        for (let number of numbers) {
+          const button = document.createElement('button');
+          button.textContent = number;
+          keypad.appendChild(button);
+          button.value = number;
+
+          button.onclick = () => { transmit('' + number); };
+
+        }
+
+        let reader = socket.readable.getReader();
+        while (true) {
+          let { value, done } = await reader.read();
+          if (done || !value)
+            break;
+
+          let message = new TextDecoder().decode(value);
+          let lines = message.split('<');
+          for (let line of lines) {
+            if (line.length == 0)
+              continue;
+
+            appendMessage('<' + line);
+          }
+        }
+      };
+    };
+  </script>
+</head>
+<body>
+  <button id="connect" value="Connect">Connect</button>
+  <div id="scroller">
+    <section id="history"></section>
+  </div>
+  <div>
+    <span>
+      <input id="msg" type="text"></input>
+    </span>
+    <span>
+      <button id="send">Send</button>
+    </span>
+  </div>
+  <section id="keypad"></section>
+</body>
+</html>
