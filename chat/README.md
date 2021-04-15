@@ -1,7 +1,7 @@
 
 This demo connects to an [ncat](https://nmap.org/ncat/guide/index.html) chat server.
 
-It allows "users" in two iframes, and any other users connecting to the server, to char with each other.
+It allows "users" in two iframes, and any other users connecting to the server, to chat with each other.
 
 ```
 $ sudo apt-get install ncat
