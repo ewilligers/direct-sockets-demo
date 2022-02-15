@@ -20,6 +20,16 @@
       flex: 1;
     }
   </style>
+  <script>
+    'use strict';
+    window.onload = () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("sw.js");
+      } else {
+        location.protocol = 'https:';
+      }
+    };
+  </script>
 </head>
 <body>
   <section>
