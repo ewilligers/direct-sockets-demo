@@ -11,4 +11,4 @@ self.addEventListener('fetch', async (event) => {
     statusText: response.statusText,
     headers: headers
   });
-};
+});
