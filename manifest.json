@@ -7,6 +7,7 @@
       "type": "image/svg+xml"
     }
   ],
+  "scope": "/",
   "start_url": "index.html",
   "display": "minimal-ui",
   "isolated_storage": true
