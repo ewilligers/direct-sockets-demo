@@ -10,4 +10,4 @@ $ ncat -l 4004 --chat
 
 Open [chat.html](chat.html) using a Chromium browser on the same machine as the ncat server.
 
-Use `--enable-features=DirectSockets --restricted-api-origins=https://ewilligers.github.io/` when launching Chromium.
+Use `--restricted-api-origins=https://ewilligers.github.io/` when launching Chromium.

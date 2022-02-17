@@ -1,0 +1,13 @@
+{
+  "name": "Direct Sockets Demo",
+  "icons": [
+    {
+      "src": "https://camo.githubusercontent.com/404bdb91c6e52c4a6704993854e40233fa01c01e476e4893932c12425f4d8e37/68747470733a2f2f776963672e6769746875622e696f2f6469726563742d736f636b6574732f6c6f676f2d736f636b65742e737667",
+      "sizes": "150x150",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "minimal-ui",
+  "isolated_storage": true
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Direct Sockets Demo</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:,">
+  <script>
+    'use strict';
+    window.onload = () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("sw.js");
+      } else {
+        location.protocol = 'https:';
+      }
+    };
+  </script>
+</head>
+<body>
+  <ul>
+    <li>
+      <a href="chat/chat.html">TCP Chat</a> (<a href="chat/">Instructions</a>)
+    </li>
+  </ul>
+</body>
+</html>

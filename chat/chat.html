@@ -2,6 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <title>TCP Chat</title>
+  <link rel="manifest" href="../manifest.json">
   <link rel="icon" href="data:,">
   <style>
     html, body, section, iframe {
@@ -24,7 +26,7 @@
     'use strict';
     window.onload = () => {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register("sw.js");
+        navigator.serviceWorker.register("../sw.js");
       } else {
         location.protocol = 'https:';
       }
